@@ -68,7 +68,7 @@ These effects degrade loop stability, increase jitter, and slow down the locking
 ---
 
 ## Cadence Schematic — Testbench View
-![Charge Pump Testbench](./Screenshot_from_2025-12-02_07-06-13.png)
+![Charge Pump Testbench](./cp_test.png)
 
 ---
 
