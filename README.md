@@ -73,7 +73,7 @@ These effects degrade loop stability, increase jitter, and slow down the locking
 ---
 
 ## Cadence Schematic — Charge Pump Circuit
-![Charge Pump Schematic](./Screenshot_from_2025-12-02_07-06-16.png)
+![Charge Pump Schematic](./cp.png)
 
 
 ---
