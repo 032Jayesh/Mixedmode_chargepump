@@ -47,18 +47,112 @@ The Charge Pump:
 
 ---
 
-## ⚠ Limitations of Traditional Charge Pumps
+# Project Design: Visual Asset and Device Calculations
 
-Traditional MOS-based CP designs suffer from:
+A README that embeds the provided design images and documents the transistor sizing and small-signal on-resistance calculations. Copy this file into `README.md` at your project root and place the images in `assets/` as described below.
 
-- **Charge/Discharge current mismatch**  
-- **Glitches due to switching transients**  
-- **Leakage currents causing phase error**  
-- **Output ripple affecting VCO stability**  
-- **Limited swing range under low supply**  
-- **Switch timing delay leading to phase error**
+---
 
-These effects degrade loop stability, increase jitter, and slow down the locking process.
+## Preview
+
+<p align="center">
+  <img src="assets/design.png" alt="Design Preview" width="900" />
+</p>
+
+<p align="center">
+  <img src="assets/design2.png" alt="Schematic & Calculations" width="900" />
+</p>
+
+> **Note:** Place the image files in your repository at `assets/design.png` and `assets/design2.png`. If you prefer different paths or filenames, update the `src` attributes accordingly.
+
+---
+
+## Given Specifications
+
+- Electron mobility × oxide capacitance: \(\mu_n C_{ox} = 200\ \mu\text{A}/\text{V}^2 = 200\times10^{-6}\ \text{A}/\text{V}^2\).
+- Hole mobility × oxide capacitance: \(\mu_p C_{ox} = 80\ \mu\text{A}/\text{V}^2 = 80\times10^{-6}\ \text{A}/\text{V}^2\).
+- Overdrive voltage: \(V_{ov}=0.25\ \text{V}\).
+- Widths and length: \(W_n = 120\ \text{nm},\ W_p = 480\ \text{nm},\ L = 45\ \text{nm}\).
+
+---
+
+## Step 1 — Compute \(W/L\)
+
+\[
+\left(\frac{W}{L}\right)_n = \frac{120}{45} = 2.6666667
+\]
+
+\[
+\left(\frac{W}{L}\right)_p = \frac{480}{45} = 10.6666667
+\]
+
+---
+
+## Step 2 — NMOS Saturation Current (long-channel square-law style approximation)
+
+Use the simplified MOS saturation current expression (square-law style):
+
+\[
+I_{D} = \frac{1}{2}\,\mu C_{ox}\left(\frac{W}{L}\right) V_{ov}^2
+\]
+
+**NMOS arithmetic (step-by-step):**
+
+1. \(V_{ov}^2 = (0.25)^2 = 0.0625\).
+2. \(\mu_n C_{ox} \cdot (W/L)_n = 200\times10^{-6}\cdot2.6666667 = 5.3333334\times10^{-4}\ \text{A}/\text{V}^2\).
+3. Multiply by \(V_{ov}^2\): \(5.3333334\times10^{-4}\cdot0.0625 = 3.333333375\times10^{-5}\ \text{A}\).
+4. Apply the 1/2 factor: \(I_{D,n} = \tfrac{1}{2}\cdot3.333333375\times10^{-5} = 1.6666666875\times10^{-5}\ \text{A} \approx 16.67\ \mu\text{A}.\)
+
+---
+
+## Step 3 — PMOS Saturation Current
+
+**PMOS arithmetic (step-by-step):**
+
+1. \(\mu_p C_{ox} \cdot (W/L)_p = 80\times10^{-6}\cdot10.6666667 = 8.53333336\times10^{-4}\ \text{A}/\text{V}^2\).
+2. Multiply by \(V_{ov}^2\): \(8.53333336\times10^{-4}\cdot0.0625 = 5.33333335\times10^{-5}\ \text{A}\).
+3. Apply the 1/2 factor: \(I_{D,p} = \tfrac{1}{2}\cdot5.33333335\times10^{-5} = 2.666666675\times10^{-5}\ \text{A} \approx 26.67\ \mu\text{A}.\)
+
+---
+
+## Step 4 — Approximate \(R_{on}\) Using Small-Signal Approximation
+
+Using the boxed approximation (small-signal channel resistance around the operating point):
+
+\[
+R_{on} \approx \frac{1}{\mu C_{ox} (W/L) V_{ov}}
+\]
+
+**NMOS:**
+
+- Denominator: \(200\times10^{-6}\cdot2.6666667\cdot0.25 = 1.33333335\times10^{-4}\ \text{A}/\text{V}\).
+- \(R_{on,n} \approx \dfrac{1}{1.33333335\times10^{-4}} \approx 7{,}500\ \Omega.\)
+
+**PMOS:**
+
+- Denominator: \(80\times10^{-6}\cdot10.6666667\cdot0.25 = 2.13333334\times10^{-4}\ \text{A}/\text{V}\).
+- \(R_{on,p} \approx \dfrac{1}{2.13333334\times10^{-4}} \approx 4{,}687.5\ \Omega.\)
+
+---
+
+## Final Summary (numeric)
+
+- \(I_{D,n} \approx 16.67\ \mu\text{A}\)
+- \(I_{D,p} \approx 26.67\ \mu\text{A}\)
+- \(R_{on,n} \approx 7.5\ \text{k}\Omega\)
+- \(R_{on,p} \approx 4.6875\ \text{k}\Omega\)
+
+---
+
+## Usage & Image Placement
+
+To reproduce this README in your repo:
+
+```bash
+mkdir -p assets
+# copy the two images into assets/ as design.png and design2.png
+
+
 
 ## Simulation Waveforms
 
@@ -78,53 +172,14 @@ These effects degrade loop stability, increase jitter, and slow down the locking
 
 ---
 
-## 🔁 Improved Charge Pump With Error Amplifier
-
-To address mismatch, an improved charge pump uses:
-
-- A **high-gain error amplifier**  
-- Feedback loop to force **I_up = I_down**  
-- Better steady-state behavior  
-- Lower phase error  
-- Reduced mismatch compared to the traditional design  
-
-However, leakage-induced phase error and ripple remain challenges.
-
----
-
-## 🟦 Differential Charge Pump With Reference Voltage
-
-A more advanced architecture employs a **fully differential charge pump**, designed to:
-
-### ✔ Cancel leakage-induced phase error
-Leakage affects both differential outputs equally → differential subtraction removes it.
-
-### ✔ Improve current matching
-Using fully symmetrical pull-up and pull-down paths.
-
-### ✔ Achieve wider output voltage swing
-Suitable for low-voltage and high-frequency designs.
-
-### ✔ Reduce glitches and switching noise
-Through source-side switching and precharge circuitry.
-
-### ✔ Stabilize the output voltage
-Using a **reference-voltage follower** plus a protection network to prevent back-injection.
-
-### ✔ Produce stable output without spurious jumps
-Critical for high-speed PLL acquisition and locking.
-
-This architecture meets the needs of high-speed communication systems where even small VCO voltage fluctuations can severely affect output frequency.
-
----
 
 ## 📊 Performance Summary
 
 From simulated behavior based on the documented architecture:
 
-- **Technology:** 0.35 μm CMOS  
-- **Supply Voltage:** 3.3 V  
-- **Output Swing:** ~0 to 3.1 V  
+- **Technology:** 45 nm CMOS  
+- **Supply Voltage:** 1.1 V  
+- **Output Swing:** ~0 to 1.08 V  
 - **Current Mismatch:** < 0.3%  
 - **Stable output with minimal ripple**  
 - **Reduced glitch and noise sensitivity**
