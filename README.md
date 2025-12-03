@@ -142,6 +142,58 @@ Use the linearized approximation around the operating point:
 
 
 ---
+
+
+## 📊 Performance Summary
+
+From simulated behavior based on the documented architecture:
+
+- **Technology:** 45 nm CMOS  
+- **Supply Voltage:** 1.1 V  
+- **Output Swing:** ~0 to 1.08 V  
+- **Current Mismatch:** < 0.3%  
+- **Stable output with minimal ripple**  
+- **Reduced glitch and noise sensitivity**
+
+These characteristics satisfy the stringent requirements of modern high-speed PLLs.
+
+
+## References
+
+[1] W. Rhee, “Design of high-performance CMOS charge pumps in phase locked loops,” Proc. Int. Symp. Circuits Syst., vol. 2, pp. 545–548, 1999.
+
+[2] J.-S. Lee and M.-S. Keel, “Charge pump with perfect current matching characteristics in phase-locked loops,” Electron. Lett., vol. 36, pp. 1907–1908, 2000.
+
+[3] P. Acco, M. P. Kennedy, C. Mria, B. Morley, and B. Frigyik, "Behavioral modeling of charge pump phase locked loops," Proc. IEEE/ISCAS, pp. 375–378, Orlando, FL, May 1999.
+
+[4] H. Rategh, H. Samavati, T. Lee, “A CMOS frequency synthesizer with an injection locked frequency divider for a 52 GHz wireless LAN receiver,” IEEE J. Solid-State Circuits, vol. 35, pp. 780–787, 2000.
+
+[5] R. A. Baki, M. N. ElGamal, “A new CMOS charge pump for low voltage high speed PLL applications,” Proc. 2003 Int. Symp. Circuits and Systems (ISCAS’03), vol. 1, pp. I-2657–I-2660, 2003.
+
+[6] J. S. Lee, M. S. Keel, S. I. Lim, “Charge pump with perfect current matching characteristics in phase locked loops,” Electronics Letters, vol. 36, pp. 1907–1908, 2000.
+
+[7] J. A. Starzyk, Ying-Wei Jan, Fengjing Qiu, “A DC–DC charge pump design based on voltage doublers,” IEEE Trans. Circuits Syst. I, vol. 48(3), pp. 350–359, 2001.
+
+[8] P. K. Hanumolu, M. Brownlee, K. Mayaram, and U.-K. Moon, "Analysis of charge pump phase locked loops," IEEE Trans. Circuits Syst., vol. 51, no. 9, pp. 1665–1674, Sept. 2004.
+
+[9] Shanfeng Cheng, Jose Silva-Martinez, Aydin Ilker Karsilayan, “Design and Analysis of an Ultrahigh-Speed Glitch-Free Fully Differential Charge Pump With Minimum Output Current Variation and Accurate Matching,” IEEE Trans. Circuits Syst., vol. 53(9), pp. 843–847, 2006.
+
+[10] N. D. Dalt and C. Sandner, “A Subpicosecond Jitter PLL for Clock Generation in 0.12 μm Digital CMOS,” IEEE J. Solid-State Circuits, vol. 38, no. 7, pp. 1275–1278, July 2003.
+
+[11] J. F. Parker and D. Weinlader, “A 15 mW 3.125 GHz PLL for serial backplane transceivers in 0.13 μm CMOS,” Proc. Int. Solid-State Circuits Conf., pp. 412–413, 2005.
+
+[12] B. Terlemez and J. P. Uyemura, “The design of a differential CMOS charge pump for high performance phase-locked loops,” Proc. Int. Symp. Circuits Syst., vol. 4, pp. IV–561–564, 2004.
+
+[13] E. Juarez-Hernandez and A. Diaz-Sanchez, “A novel CMOS charge pump circuit with positive feedback for PLL applications,” Proc. Int. Conf. Electron., Circuits Systems, vol. 1, pp. 349–352, 2001.
+
+[14] R. C. H. Beek and C. S. Vaucher, “A 2.5–10 GHz clock multiplier unit with 0.22-ps RMS jitter in standard 0.18 μm CMOS,” IEEE J. Solid-State Circuits, vol. 39, no. 11, pp. 1862–1872, 2004.
+
+[15] T. S. Cheung and B. C. Lee, “A 1.8–3.2 GHz fully differential GaAs MESFET PLL,” IEEE J. Solid-State Circuits, vol. 36, no. 4, pp. 605–601, 2001.
+
+[16] B. Razavi, *Design of Analog CMOS Integrated Circuits.* New York: McGraw-Hill, ch. 15, pp. 550–556, 2001.
+
+---
+
 ## Applications of the Charge Pump
 
 A charge pump that provides low current-mismatch and stable charge transfer is useful in many mixed-signal and power-management contexts. Typical applications include:
@@ -174,15 +226,3 @@ A charge pump that provides low current-mismatch and stable charge transfer is u
 - For production designs, validate with SPICE and characterise across process, voltage, and temperature (PVT) corners.
 
 
-## 📊 Performance Summary
-
-From simulated behavior based on the documented architecture:
-
-- **Technology:** 45 nm CMOS  
-- **Supply Voltage:** 1.1 V  
-- **Output Swing:** ~0 to 1.08 V  
-- **Current Mismatch:** < 0.3%  
-- **Stable output with minimal ripple**  
-- **Reduced glitch and noise sensitivity**
-
-These characteristics satisfy the stringent requirements of modern high-speed PLLs.
