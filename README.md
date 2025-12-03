@@ -49,19 +49,80 @@ The Charge Pump:
 
 # Project Design: Visual Asset and Device Calculations
 
-A README that embeds the provided design images and documents the transistor sizing and small-signal on-resistance calculations. Copy this file into `README.md` at your project root and place the images in `assets/` as described below.
+
+
+## Given specifications
+
+- `µn * Cox = 200 µA/V² = 200e-6 A/V²`  
+- `µp * Cox = 80 µA/V²  = 80e-6 A/V²`  
+- `V_ov = 0.25 V`  
+- `W_n = 120 nm`  
+- `W_p = 480 nm`  
+- `L   = 45 nm`
 
 ---
 
+## 1) Width-to-length ratios
 
-## Given Specifications
-
-- Electron mobility × oxide capacitance: \(\mu_n C_{ox} = 200\ \mu\text{A}/\text{V}^2 = 200\times10^{-6}\ \text{A}/\text{V}^2\).
-- Hole mobility × oxide capacitance: \(\mu_p C_{ox} = 80\ \mu\text{A}/\text{V}^2 = 80\times10^{-6}\ \text{A}/\text{V}^2\).
-- Overdrive voltage: \(V_{ov}=0.25\ \text{V}\).
-- Widths and length: \(W_n = 120\ \text{nm},\ W_p = 480\ \text{nm},\ L = 45\ \text{nm}\).
+- `(W/L)_n = 120 / 45 = 2.6666667`  
+- `(W/L)_p = 480 / 45 = 10.6666667`
 
 ---
+
+## 2) Saturation current formula (square-law approximation)
+
+We use the simplified (long-channel) saturation expression:
+### NMOS arithmetic (step-by-step)
+
+1. `V_ov^2 = (0.25)^2 = 0.0625`  
+2. `µn C_ox * (W/L)_n = 200e-6 * 2.6666667 = 5.3333334e-4 A/V²`  
+3. multiply by `V_ov^2`: `5.3333334e-4 * 0.0625 = 3.333333375e-5 A`  
+4. apply 1/2:  
+   `I_D_n = 0.5 * 3.333333375e-5 = 1.6666666875e-5 A ≈ 16.67 µA`
+
+### PMOS arithmetic (step-by-step)
+
+1. `µp C_ox * (W/L)_p = 80e-6 * 10.6666667 = 8.53333336e-4 A/V²`  
+2. multiply by `V_ov^2`: `8.53333336e-4 * 0.0625 = 5.33333335e-5 A`  
+3. apply 1/2:  
+   `I_D_p = 0.5 * 5.33333335e-5 = 2.666666675e-5 A ≈ 26.67 µA`
+
+---
+
+## 3) Small-signal approximate `R_on`
+
+Use the linearized approximation around the operating point:
+
+
+### NMOS
+
+- Denominator: `200e-6 * 2.6666667 * 0.25 = 1.33333335e-4 A/V`  
+- `R_on,n ≈ 1 / 1.33333335e-4 ≈ 7_500 Ω` (≈ 7.5 kΩ)
+
+### PMOS
+
+- Denominator: `80e-6 * 10.6666667 * 0.25 = 2.13333334e-4 A/V`  
+- `R_on,p ≈ 1 / 2.13333334e-4 ≈ 4_687.5 Ω` (≈ 4.6875 kΩ)
+
+---
+
+## 4) Final numeric summary
+
+- `I_D,n ≈ 16.67 µA`  
+- `I_D,p ≈ 26.67 µA`  
+- `R_on,n ≈ 7.5 kΩ`  
+- `R_on,p ≈ 4.6875 kΩ`
+
+---
+
+## Notes & assumptions
+
+- These calculations use the long-channel square-law style formulas — good for hand estimates. In modern deep-submicron processes the real device behavior differs (velocity saturation, mobility reduction, channel-length modulation, body effect, etc.). For production-accurate numbers, run SPICE with the foundry compact model.  
+- Units: A, V, Ω unless noted.  
+- All arithmetic displayed explicitly for clarity.
+
+---
+
 
 
 ## Simulation Waveforms
