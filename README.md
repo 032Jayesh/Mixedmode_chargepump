@@ -142,6 +142,36 @@ Use the linearized approximation around the operating point:
 
 
 ---
+## Applications of the Charge Pump
+
+A charge pump that provides low current-mismatch and stable charge transfer is useful in many mixed-signal and power-management contexts. Typical applications include:
+
+- **On-chip voltage generation (boost/negative rails):** Generate higher (e.g., 2×/3×) or negative supply voltages from a single supply for gate drivers, EEPROM/Flash programming, or bias networks.
+
+- **Non-volatile memory programming:** Provide the high programming and erase voltages required by flash and EEPROM without an external DC-DC converter.
+
+- **LCD / OLED driver supplies:** Produce the voltages needed for display gate drivers and contrast biasing in small-panel displays.
+
+- **Bias generation for analog blocks:** Create stable internal bias rails (substrate, well, reference biases) for op-amps, comparators, and ADCs where matching and low mismatch matter.
+
+- **Level shifters and gate drivers:** Drive transistors whose gates require voltages beyond the core supply (e.g., high-side/low-side drivers in power stages).
+
+- **On-chip DC-DC conversion for ultra-low-power systems:** Replace an external regulator in energy-harvesting or sensor nodes where area and quiescent current are critical.
+
+- **PLL/VCO tuning and supply:** Provide local supply or bias voltages for RF blocks, phase-locked loops, and voltage-controlled oscillators.
+
+- **Charge redistribution and sampling circuits:** Improve accuracy of switched-capacitor circuits by supplying matched, low-mismatch charge to sampling capacitors.
+
+- **Battery-powered devices and portable electronics:** Small-area, efficient charge pumps help extend battery life by avoiding large off-chip converters.
+
+- **Test and calibration circuits:** Provide known, repeatable voltages for on-chip calibration, test-mode programming, and factory trim operations.
+
+
+### Notes
+
+- The usefulness of a charge pump depends on its efficiency, output ripple, current-matching, and the target process. For deep-submicron technologies, consider effects such as switching loss, leakage, and charge injection when integrating a charge pump.
+
+- For production designs, validate with SPICE and characterise across process, voltage, and temperature (PVT) corners.
 
 
 ## 📊 Performance Summary
